@@ -1,0 +1,27 @@
+# Build çıktıları
+target/
+*.class
+*.jar
+
+# Uygulama verisi
+uploads/
+
+# IDE
+.idea/
+*.iml
+
+# Environment
+.env
+*.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# SigNoz kaynak kodu — asla repoya eklenmez
+observability/signoz/signoz/

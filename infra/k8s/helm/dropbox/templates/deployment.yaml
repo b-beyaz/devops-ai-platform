@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "dropbox.fullname" . }}
+  labels:
+    {{- include "dropbox.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dropbox.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1        # aynı anda 1 yeni pod ayağa kalk
+      maxUnavailable: 0  # sıfır kesinti — prod için kritik
+  template:
+    metadata:
+      labels:
+        {{- include "dropbox.selectorLabels" . | nindent 8 }}
+      annotations:
+        # ConfigMap değişince pod'ları otomatik yeniden başlat
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+    spec:
+      # ── Güvenlik: root olmayan kullanıcı (Dockerfile'daki appuser ile uyumlu) ──
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000     # PVC mount'larının group'u
+
+      # ── MySQL hazır olana kadar bekle ─────────────────────────────────────────
+      initContainers:
+        - name: wait-for-mysql
+          image: busybox:1.36
+          command:
+            - sh
+            - -c
+            - |
+              until nc -z {{ include "dropbox.mysqlHost" . }} {{ .Values.database.port }}; do
+                echo "MySQL bekleniyor...";
+                sleep 3;
+              done;
+              echo "MySQL hazır."
+
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8085
+              protocol: TCP
+
+          # ── Env — hassas olmayanlar ConfigMap'ten ────────────────────────────
+          envFrom:
+            - configMapRef:
+                name: {{ include "dropbox.fullname" . }}-config
+
+          # ── Env — hassas olanlar Secret'ten ──────────────────────────────────
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dropbox-secret
+                  key: db-username
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dropbox-secret
+                  key: mysql-password
+            - name: SPRING_MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: dropbox-secret
+                  key: mail-username
+            - name: SPRING_MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: dropbox-secret
+                  key: mail-password
+
+          # ── Probe'lar — Spring Actuator gerektirir ────────────────────────────
+          # startupProbe: uygulama ilk ayağa kalkarken (30×5s = 150s max)
+          startupProbe:
+            httpGet:
+              path: /actuator/health
+              port: http
+            failureThreshold: 30
+            periodSeconds: 5
+
+          # livenessProbe: uygulama dondu mu?
+          livenessProbe:
+            httpGet:
+              path: /actuator/health/liveness
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            failureThreshold: 3
+            timeoutSeconds: 5
+
+          # readinessProbe: trafik alabilir mi?
+          readinessProbe:
+            httpGet:
+              path: /actuator/health/readiness
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            failureThreshold: 3
+            timeoutSeconds: 5
+
+          # ── Resource limitleri ────────────────────────────────────────────────
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+          # ── Volume mount — uploads kalıcı depolama ───────────────────────────
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - name: uploads
+              mountPath: /app/uploads
+          {{- end }}
+
+      # ── Volumes ──────────────────────────────────────────────────────────────
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: {{ include "dropbox.fullname" . }}-uploads
+      {{- end }}

@@ -1,0 +1,73 @@
+image:
+  repository: aysebeyaz/dropbox
+  tag: latest
+  pullPolicy: IfNotPresent
+  createSecret: false
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8085
+
+ingress:
+  enabled: false
+  className: nginx
+  host: dropbox.local
+  tls: false
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "512Mi"
+  limits:
+    cpu: "500m"
+    memory: "1Gi"
+
+hpa:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 70
+
+persistence:
+  enabled: true
+  storageClass: ""
+  size: 5Gi
+  accessMode: ReadWriteOnce
+
+app:
+  profile: dev
+  port: "8085"
+  uploadDir: /app/uploads
+  actuator:
+    exposedEndpoints: "health,info,prometheus"
+
+database:
+  name: dropboxproject
+  host: ""
+  port: "3306"
+
+mail:
+  host: smtp.gmail.com
+  port: "587"
+  username: ""
+
+mysql:
+  enabled: true
+  auth:
+    database: dropboxproject
+    username: dropbox_user
+    existingSecret: dropbox-secret
+  primary:
+    persistence:
+      enabled: true
+      size: 8Gi
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "512Mi"
+      limits:
+        cpu: "500m"
+        memory: "1Gi"

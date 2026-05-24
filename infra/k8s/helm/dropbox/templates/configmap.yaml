@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "dropbox.fullname" . }}-config
+  labels:
+    {{- include "dropbox.labels" . | nindent 4 }}
+data:
+  # Spring profili
+  SPRING_PROFILES_ACTIVE: {{ .Values.app.profile | quote }}
+
+  # Datasource — şifre Secret'tan gelir, burada yok
+  SPRING_DATASOURCE_URL: {{ include "dropbox.jdbcUrl" . | quote }}
+
+  # Upload dizini
+  APP_UPLOAD_DIR: {{ .Values.app.uploadDir | quote }}
+
+  # Actuator — K8s probe'ları için health endpoint açık olmalı
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: {{ .Values.app.actuator.exposedEndpoints | quote }}
+  MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+  MANAGEMENT_HEALTH_LIVENESSSTATE_ENABLED: "true"
+  MANAGEMENT_HEALTH_READINESSSTATE_ENABLED: "true"
+
+  # Mail — kullanıcı adı burada, şifre Secret'tan
+  SPRING_MAIL_HOST: {{ .Values.mail.host | quote }}
+  SPRING_MAIL_PORT: {{ .Values.mail.port | quote }}
+  SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
+  SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
+
+  # Server portu
+  SERVER_PORT: {{ .Values.app.port | quote }}

@@ -1,0 +1,12 @@
+apiVersion: v2
+name: dropbox
+description: Dropbox clone — Spring Boot + MySQL
+type: application
+version: 0.1.0
+appVersion: "latest"
+
+dependencies:
+  - name: mysql
+    version: "12.3.5"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: mysql.enabled

@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-slack-sidebar: #1a1124;
+  --color-slack-sidebarHov: #2e1f47;
+  --color-slack-sidebarAct: #4a2f6e;
+  --color-slack-main: #1f1433;
+  --color-slack-input: #2e2040;
+  --color-slack-border: #2e2040;
+  --color-slack-text: #c9bede;
+  --color-slack-muted: #7a6d8c;
+}
+
+* { box-sizing: border-box; }
+body { background: #1f1433; margin: 0; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #4a2f6e; border-radius: 4px; }
