@@ -39,6 +39,7 @@ persistence:
 
 app:
   profile: dev
+  namespace: dropbox-dev
   port: "8085"
   uploadDir: /app/uploads
   actuator:
@@ -48,11 +49,6 @@ database:
   name: dropboxproject
   host: ""
   port: "3306"
-
-mail:
-  host: smtp.gmail.com
-  port: "587"
-  username: ""
 
 mysql:
   enabled: true

@@ -33,6 +33,11 @@ persistence:
 
 app:
   profile: prod
+  namespace: dropbox-prod
+  port: "8085"
+  uploadDir: /app/uploads
+  actuator:
+    exposedEndpoints: "health,info,prometheus"
 
 mysql:
   primary:

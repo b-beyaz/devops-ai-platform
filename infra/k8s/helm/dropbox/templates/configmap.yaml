@@ -20,11 +20,5 @@ data:
   MANAGEMENT_HEALTH_LIVENESSSTATE_ENABLED: "true"
   MANAGEMENT_HEALTH_READINESSSTATE_ENABLED: "true"
 
-  # Mail — kullanıcı adı burada, şifre Secret'tan
-  SPRING_MAIL_HOST: {{ .Values.mail.host | quote }}
-  SPRING_MAIL_PORT: {{ .Values.mail.port | quote }}
-  SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH: "true"
-  SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE: "true"
-
   # Server portu
   SERVER_PORT: {{ .Values.app.port | quote }}
