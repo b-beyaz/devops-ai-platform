@@ -1,0 +1,12 @@
+#!/bin/bash
+SETUP_PATH="/mnt/c/devops-ai-platform/setup"
+source /mnt/c/devops-ai-platform/target-apps/dropbox-app/.env
+
+#echo "1. ArgoCD kurulumu"
+#$SETUP_PATH/argocd-setup.sh
+
+#echo "2. Sealed Secrets controller kurulumu"
+#$SETUP_PATH/sealed-secret-controller-setup.sh
+
+echo "3. ArgoCD manifest apply et"
+$SETUP_PATH/argocd-manifest-setup.sh
