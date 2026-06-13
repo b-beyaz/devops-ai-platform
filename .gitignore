@@ -25,3 +25,4 @@ __pycache__/
 
 # SigNoz kaynak kodu — asla repoya eklenmez
 observability/signoz/signoz/
+.venv/
