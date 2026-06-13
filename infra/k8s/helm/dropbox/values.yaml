@@ -51,6 +51,8 @@ database:
   port: "3306"
 
 mysql:
+  image:
+    tag: "8.0"
   enabled: true
   auth:
     database: dropboxproject
