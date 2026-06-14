@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: {{ include "mysql.fullname" . }}
   labels:
-    {{- include "dropbox.labels" . | nindent 4 }}
+    {{- include "mysql.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
   selector:
-    {{- include "dropbox.selectorLabels" . | nindent 4 }}
+    {{- include "mysql.selectorLabels" . | nindent 4 }}
   ports:
     - name: http
       protocol: TCP
