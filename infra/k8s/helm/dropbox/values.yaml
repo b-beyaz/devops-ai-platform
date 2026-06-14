@@ -52,6 +52,7 @@ database:
 
 mysql:
   image:
+    repository: mysql
     tag: "8.0"
   enabled: true
   auth:
@@ -69,3 +70,7 @@ mysql:
       limits:
         cpu: "500m"
         memory: "1Gi"
+  database: dropboxproject
+  user: dropbox_user
+  port: 3306
+  targetPort: 3306
