@@ -68,16 +68,6 @@ spec:
                 secretKeyRef:
                   name: dropbox-secret
                   key: mysql-password
-            - name: SPRING_MAIL_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: dropbox-secret
-                  key: mail-username
-            - name: SPRING_MAIL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: dropbox-secret
-                  key: mail-password
 
           # ── Probe'lar — Spring Actuator gerektirir ────────────────────────────
           # startupProbe: uygulama ilk ayağa kalkarken (30×5s = 150s max)
