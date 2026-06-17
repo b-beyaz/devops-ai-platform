@@ -5,6 +5,8 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: dropbox=aysebeyaz/dropbox
+    argocd-image-updater.argoproj.io/dropbox.helm.image-name: image.repository
+    argocd-image-updater.argoproj.io/dropbox.helm.image-tag: image.tag
     argocd-image-updater.argoproj.io/dropbox.update-strategy: latest
     argocd-image-updater.argoproj.io/write-back-method: git
     argocd-image-updater.argoproj.io/git-branch: main
