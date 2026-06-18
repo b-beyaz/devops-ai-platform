@@ -1,8 +1,19 @@
-apiVersion: v1
-kind: ConfigMap
+apiVersion: argocd-image-updater.argoproj.io/v1alpha1
+kind: ImageUpdater
 metadata:
-  name: argocd-image-updater-config
+  name: dropbox-updater
   namespace: argocd
-data:
-  argocd.namespace: "argocd"
-  watch.namespaces: "dropbox-dev,argocd"
+spec:
+  writeBackConfig:
+    method: "git"
+    gitConfig:
+      branch: "main"
+      repository: "git@github.com:b-beyaz/devops-ai-platform.git"
+      writeBackTarget: "helmvalues:infra/k8s/helm/dropbox/values.yaml"
+  applicationRefs:
+    - namePattern: "dropbox*"
+      images:
+        - alias: "dropbox"
+          imageName: "aysebeyaz/dropbox"
+  commonUpdateSettings:
+    updateStrategy: "newest-build"
