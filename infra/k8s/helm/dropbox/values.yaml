@@ -1,6 +1,6 @@
 image:
   repository: aysebeyaz/dropbox
-  tag: latest
+  tag: 06-18.17
   pullPolicy: IfNotPresent
   createSecret: false
 
