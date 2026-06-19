@@ -15,5 +15,9 @@ spec:
       images:
         - alias: "dropbox"
           imageName: "aysebeyaz/dropbox"
+          manifestTargets:
+            helm:
+              name: "image.repository"
+              tag: "image.tag"
   commonUpdateSettings:
     updateStrategy: "newest-build"
