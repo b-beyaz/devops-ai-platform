@@ -21,3 +21,6 @@ spec:
               tag: "image.tag"
   commonUpdateSettings:
     updateStrategy: "newest-build"
+    pullSecret: "pullsecret:argocd/dockerhub-creds"
+    ignoreTags:
+      - "latest"

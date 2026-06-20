@@ -3,6 +3,8 @@ name: Build and Push Docker Image
 on:
   push:
     branches: [ "main", "dockerize-branch" ]
+    paths:
+      - "target-apps/dropbox-app/**"
 
 jobs:
   build-and-push:
