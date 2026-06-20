@@ -9,7 +9,7 @@ spec:
     gitConfig:
       branch: "main"
       repository: "git@github.com:b-beyaz/devops-ai-platform.git"
-      writeBackTarget: "helmvalues:/values.yaml"
+      writeBackTarget: "helmvalues:values.yaml"
   applicationRefs:
     - namePattern: "dropbox*"
       images:
