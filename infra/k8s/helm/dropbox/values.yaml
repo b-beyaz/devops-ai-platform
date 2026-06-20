@@ -1,6 +1,6 @@
 image:
   repository: aysebeyaz/dropbox
-  tag: 06-20.37
+  tag: 06-20.38
   pullPolicy: IfNotPresent
   createSecret: false
 replicaCount: 1
