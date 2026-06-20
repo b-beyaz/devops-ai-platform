@@ -46,7 +46,6 @@ jobs:
           context: target-apps/dropbox-app
           file: target-apps/dropbox-app/Dockerfile
           push: true
-          tags: |
-            aysebeyaz/dropbox:${{ steps.vars.outputs.date_tag }}.${{ steps.vars.outputs.build_num }}
+          tags: aysebeyaz/dropbox:${{ steps.vars.outputs.date_tag }}.${{ steps.vars.outputs.build_num }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
