@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.ignoringRequestMatchers("/upload"))  // CSRF korumasını /upload endpoint'i için devre dışı bırak
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/register", "/login", "/css/**", "/js/**", "/perform_register").permitAll()
+                .requestMatchers("/register", "/login", "/css/**", "/js/**", "/perform_register", "/actuator/prometheus", "/actuator/health").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
