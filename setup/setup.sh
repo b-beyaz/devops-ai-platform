@@ -18,4 +18,4 @@ echo "5. Image Updater"
 $SETUP_PATH/image-updater-setup.sh
 
 echo "6. Create Generic SSH Key If Not Exist"
-$
+

@@ -21,6 +21,9 @@ spec:
       annotations:
         # ConfigMap değişince pod'ları otomatik yeniden başlat
         checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/actuator/prometheus"
+        prometheus.io/port: "8085"
     spec:
       # ── Güvenlik: root olmayan kullanıcı (Dockerfile'daki appuser ile uyumlu) ──
       securityContext:
@@ -75,6 +78,7 @@ spec:
             httpGet:
               path: /actuator/health
               port: http
+            initialDelaySeconds: 30
             failureThreshold: 30
             periodSeconds: 5
 
