@@ -21,6 +21,10 @@ app.add_middleware(
 app.include_router(ws.router)
 app.include_router(webhook.router)
 
+@app.get("/")
+async def startPoint():
+    return {"status": "Backend is succesfully started"}
+
 @app.on_event("startup")
 async def startup():
     logger.info("=" * 50)

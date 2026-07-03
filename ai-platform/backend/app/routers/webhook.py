@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from app.core.connection_manager import manager
 from app.core.conversation_store import conversation_store
 from app.agents.scenario_engine import run_scenario
-from app.scenarios import SCENARIOS
+#from app.scenarios import SCENARIOS
 from app.core.logger import get_logger
 
 logger = get_logger("webhook")

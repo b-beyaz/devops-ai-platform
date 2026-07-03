@@ -22,20 +22,19 @@ export function Sidebar() {
       {/* Workspace header */}
       <div className="px-4 py-3 border-b border-slack-border">
         <div className="text-white font-medium text-sm flex items-center gap-2">
-          <span className="text-lg">✈</span> DevOps Simulator
+          <span className="text-lg">✈</span> Dropbox Project Workspace
         </div>
         <div className="flex items-center gap-1.5 mt-1">
           <span className={`w-2 h-2 rounded-full ${wsConnected ? 'bg-green-400' : 'bg-red-500'}`} />
           <span className="text-slack-muted text-xs">
-            {wsConnected ? 'WS bağlı' : 'WS bağlanıyor...'}
+            {wsConnected ? 'WS connected' : 'WS is conntecting...'}
           </span>
         </div>
       </div>
 
-      {/* Kanallar */}
       <div className="pt-3 pb-1">
         <p className="px-4 text-slack-muted text-xs font-semibold uppercase tracking-wider mb-1">
-          Kanallar
+          Channels
         </p>
         <button
           onClick={() => select('general')}
@@ -53,10 +52,9 @@ export function Sidebar() {
         </button>
       </div>
 
-      {/* Direkt mesajlar */}
       <div className="border-t border-slack-border pt-3 flex-1">
         <p className="px-4 text-slack-muted text-xs font-semibold uppercase tracking-wider mb-1">
-          Direkt Mesajlar
+          Direct Messages
         </p>
         {team.map((member) => (
           <button
@@ -74,9 +72,6 @@ export function Sidebar() {
               {member.initials.slice(0, 1)}
             </div>
             <span className="truncate">{member.name}</span>
-            {member.online && (
-              <span className="w-2 h-2 bg-green-400 rounded-full ml-auto flex-shrink-0" />
-            )}
             {(unreadCounts[member.id] ?? 0) > 0 && (
               <span className="ml-auto bg-slack-alert text-white text-xs font-bold px-1.5 rounded-full">
                 {unreadCounts[member.id]}
@@ -86,7 +81,6 @@ export function Sidebar() {
         ))}
       </div>
 
-      {/* Kendi bilgisi */}
       <div className="border-t border-slack-border px-4 py-3 flex items-center gap-2">
         <div
           className="w-7 h-7 rounded flex items-center justify-center text-xs font-bold"

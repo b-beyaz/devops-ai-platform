@@ -3,8 +3,8 @@ from app.core.connection_manager import manager
 from app.core.conversation_store import conversation_store
 from app.agents.agent_service import get_agent_response
 from app.agents.roles import TEAM
-from app.scenarios import SCENARIOS
-from app.scenarios.base import Scenario
+#from app.scenarios import SCENARIOS
+#from app.scenarios.base import Scenario
 from app.core.logger import get_logger
 
 logger = get_logger("scenario_engine")

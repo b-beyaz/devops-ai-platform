@@ -14,13 +14,12 @@ export function ChatArea({ onSend }: Props) {
 
   return (
     <div className="flex-1 bg-slack-main flex flex-col min-w-0 min-h-0">
-      {/* Header */}
       <div className="px-5 py-3 border-b border-slack-border flex items-center gap-2 flex-shrink-0">
         {isGeneral ? (
           <>
             <span className="text-slack-muted font-bold">#</span>
             <span className="text-white font-medium">general</span>
-            <span className="text-slack-muted text-xs ml-1">— Takım genel kanalı</span>
+            <span className="text-slack-muted text-xs ml-1">— Team general channel</span>
           </>
         ) : member ? (
           <>
