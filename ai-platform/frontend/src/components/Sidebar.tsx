@@ -6,6 +6,7 @@ const roleLabel: Record<string, string> = {
   network: 'Network',
   frontend: 'Frontend',
   devops: 'DevOps',
+  support: 'Support'
 };
 
 export function Sidebar() {

@@ -1,0 +1,1 @@
+Bu uygulama CI-CD,Monitoring 

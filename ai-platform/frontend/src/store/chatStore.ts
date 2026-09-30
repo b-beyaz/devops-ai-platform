@@ -31,18 +31,27 @@ const TEAM: TeamMember[] = [
   },
   {
     id: 'mert',
-    name: 'Mert Öztürk',
-    initials: 'MÖ',
+    name: 'Mert Türk',
+    initials: 'MT',
     role: 'frontend',
     avatarColor: '#3a2a1a',
     textColor: '#deaa7a',
     online: false,
   },
+  {
+      id: 'deniz',
+      name: 'Deniz Sahin',
+      initials: 'DS',
+      role: 'support',
+      avatarColor: '#4a5a10',
+      textColor: '#defa0a',
+      online: false,
+    },
 ];
 
 const ME: TeamMember = {
   id: 'me',
-  name: 'Sen',
+  name: 'Ben',
   initials: 'SEN',
   role: 'devops',
   avatarColor: '#2a1a2a',

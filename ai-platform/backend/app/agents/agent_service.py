@@ -1,7 +1,7 @@
 import os
 import random
 from anthropic import AsyncAnthropic
-from app.agents.roles import TEAM, TeamMember
+from app.agents.roles import TEAM, TeamMember, MENTION_MAP
 
 client = AsyncAnthropic(api_key=os.environ.get("ANTHROPIC_API_KEY", ""))
 
@@ -18,12 +18,12 @@ async def get_agent_response(
     messages = conversation_history[-10:]
 
     response = await client.messages.create(
-        model="claude-sonnet-4-20250514",
+        model="claude-sonnet-5",
         max_tokens=300,
         system=system,
         messages=messages,
     )
-    return response.content[0].text
+    return next(block.text for block in response.content if block.type == "text")
 
 
 async def decide_responder(
@@ -31,11 +31,16 @@ async def decide_responder(
         active_channel: str,
         alert_context: dict | None = None,
 ) -> TeamMember | None:
+    for mention in MENTION_MAP:
+        if mention in user_message:
+            member_id = MENTION_MAP[mention]
+            return TEAM[member_id]
+
     if active_channel in TEAM:
         return TEAM[active_channel]
 
     keywords = {
-        "ali":   ["pod", "servis", "api", "backend", "crash", "memory", "cpu", "deploy", "container", "kubernetes", "k8s"],
+        "ali":   ["exception", "stack trace", "api","response","memory leak", "heap","servis"],
         "ahmet": ["db", "database", "query", "sql", "index", "connection", "postgres", "slow", "veritabanı", "tablo"],
         "zeynep":["dns", "network", "firewall", "ping", "timeout", "bağlantı", "port", "ingress", "trafik", "ip"],
         "mert":  ["frontend", "cdn", "cache", "bundle", "react", "ui", "kullanıcı", "sayfa", "yavaş", "loading"],
