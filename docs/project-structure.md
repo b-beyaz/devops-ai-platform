@@ -99,8 +99,7 @@ The app runs on Minikube; the Alloy config sets the label `cluster = "minikube"`
 **Secrets `infra/k8s/base/`**
 
 - `sealed-secret.yaml`: `SealedSecret` named `dropbox-secret` in `dropbox-dev` (keys `db-username`, `mysql-password`, `mysql-root-password`). `setup/sealed-secret-setup.sh` generates it.
-- `sealed-secret.sh`: backs up the Sealed Secrets controller key, or restores it when a backup exists and the cluster has no key.
-- `sealed-secrets-key-backup.yaml`: the backed-up controller key.
+- `sealed-secret.sh`: backs up the Sealed Secrets controller key outside the repo (`$SEALED_KEY_BACKUP_DIR`, default `~/.secrets/sealed-secrets/`), or restores it when a backup exists and the cluster has no key. The key backup is git-ignored and must never be committed.
 
 ---
 

@@ -26,3 +26,6 @@ __pycache__/
 # SigNoz kaynak kodu — asla repoya eklenmez
 observability/signoz/signoz/
 .venv/
+
+# Sealed Secrets controller key yedeği — asla repoya eklenmez (repo dışında: ~/.secrets/sealed-secrets/)
+sealed-secrets-key-backup*.yaml
